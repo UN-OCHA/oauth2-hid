@@ -1,31 +1,28 @@
-# LinkedIn Provider for OAuth 2.0 Client
-[![Latest Version](https://img.shields.io/github/release/thephpleague/oauth2-linkedin.svg?style=flat-square)](https://github.com/thephpleague/oauth2-linkedin/releases)
+# Humanitarian ID Provider for OAuth 2.0 Client
+[![Latest Version](https://img.shields.io/github/release/un-ocha/oauth2-hid.svg?style=flat-square)](https://github.com/un-ocha/oauth2-hid/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/thephpleague/oauth2-linkedin/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/oauth2-linkedin)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/oauth2-linkedin.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/oauth2-linkedin/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/oauth2-linkedin.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/oauth2-linkedin)
-[![Total Downloads](https://img.shields.io/packagist/dt/league/oauth2-linkedin.svg?style=flat-square)](https://packagist.org/packages/league/oauth2-linkedin)
+[![Build Status](https://img.shields.io/travis/un-ocha/oauth2-hid/master.svg?style=flat-square)](https://travis-ci.org/un-ocha/oauth2-hid)
 
-This package provides LinkedIn OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
+This package provides Humanitarian ID OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
 
 To install, use composer:
 
 ```
-composer require league/oauth2-linkedin
+composer require un-ocha/oauth2-hid
 ```
 
 ## Usage
 
-Usage is the same as The League's OAuth client, using `\League\OAuth2\Client\Provider\LinkedIn` as the provider.
+Usage is the same as The League's OAuth client, using `\League\OAuth2\Client\Provider\HumanitarianId` as the provider.
 
 ### Authorization Code Flow
 
 ```php
-$provider = new League\OAuth2\Client\Provider\LinkedIn([
-    'clientId'          => '{linkedin-client-id}',
-    'clientSecret'      => '{linkedin-client-secret}',
+$provider = new League\OAuth2\Client\Provider\HumanitarianId([
+    'clientId'          => '{hid-client-id}',
+    'clientSecret'      => '{hid-client-secret}',
     'redirectUri'       => 'https://example.com/callback-url',
 ]);
 
@@ -72,7 +69,7 @@ if (!isset($_GET['code'])) {
 
 ### Managing Scopes
 
-When creating your LinkedIn authorization URL, you can specify the state and scopes your application may authorize.
+When creating your Humanitarian ID authorization URL, you can specify the state and scopes your application may authorize.
 
 ```php
 $options = [
@@ -91,44 +88,6 @@ At the time of authoring this documentation, the following scopes are available.
 - rw_company_admin
 - w_share
 
-### Retrieving LinkedIn member information
-
-When fetching resource owner details, the provider allows for an explicit list of fields to be returned, so long as they are allowed by the scopes used to retrieve the access token.
-
-A default set of fields is provided. Overriding these defaults and defining a new set of fields is easy using the `withFields` method, which is a fluent method that returns the updated provider.
-
-You can find a complete list of fields on [LinkedIn's Developer Documentation](https://developer.linkedin.com/docs/fields/basic-profile#).
-
-```php
-$fields = [
-    'id', 'first-name', 'last-name', 'maiden-name', 'formatted-name',
-    'phonetic-first-name', 'phonetic-last-name', 'formatted-phonetic-name',
-    'headline', 'location', 'industry', 'current-share', 'num-connections',
-    'num-connections-capped', 'summary', 'specialties', 'positions',
-    'picture-url', 'picture-urls', 'site-standard-profile-request',
-    'api-standard-profile-request', 'public-profile-url'
-];
-
-$provider = $provider->withFields($fields);
-$member = $provider->getResourceOwner($token);
-
-// or in one line...
-
-$member = $provider->withFields($fields)->getResourceOwner($token);
-```
-
-The `getResourceOwner` will return an instance of `League\OAuth2\Client\Provider\LinkedInResourceOwner` which has some helpful getter methods to access basic member details.
-
-For more customization and control, the `LinkedInResourceOwner` object also offers a `getAttribute` method which accepts a string to access specific attributes that may not have a getter method explicitly defined.
-
-```php
-$location = $member->getLocation();
-
-// or
-
-$location = $member->getAttribute('location.name');
-```
-
 ## Testing
 
 ``` bash
@@ -137,15 +96,15 @@ $ ./vendor/bin/phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/oauth2-linkedin/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/un-ocha/oauth2-hid/blob/master/CONTRIBUTING.md) for details.
 
 
 ## Credits
 
-- [Steven Maguire](https://github.com/stevenmaguire)
-- [All Contributors](https://github.com/thephpleague/oauth2-linkedin/contributors)
+- [Guillaume Viguier-Just](https://github.com/guillaumev)
+- [All Contributors](https://github.com/un-ocha/oauth2-hid/contributors)
 
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/thephpleague/oauth2-linkedin/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/un-ocha/oauth2-hid/blob/master/LICENSE) for more information.
