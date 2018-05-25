@@ -79,6 +79,26 @@ class HumanitarianIdResourceOwner extends GenericResourceOwner
     }
 
     /**
+     * Get user full name
+     *
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->getAttribute('name');
+    }
+
+    /**
+     * Get user picture
+     *
+     * @return string|null
+     */
+    public function getAvatar()
+    {
+        return $this->getAttribute('picture');
+    }
+
+    /**
      * Get user userId
      *
      * @return string|null
