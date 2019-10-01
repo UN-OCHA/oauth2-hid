@@ -28,6 +28,9 @@ class HumanitarianId extends AbstractProvider
         'profile',
     ];
 
+    /** @var string */
+    public $domain = 'https://auth.humanitarian.id';
+
     /**
      * Constructs an OAuth 2.0 service provider.
      *
@@ -43,6 +46,9 @@ class HumanitarianId extends AbstractProvider
     {
         if (isset($options['fields']) && !is_array($options['fields'])) {
             throw new InvalidArgumentException('The fields option must be an array');
+        }
+        if (isset($options['domain'])) {
+          $this->domain = $options['domain'];
         }
 
         parent::__construct($options, $collaborators);
@@ -65,7 +71,7 @@ class HumanitarianId extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return 'https://auth.humanitarian.id/oauth/authorize';
+        return $this->domain . '/oauth/authorize';
     }
 
     /**
@@ -75,7 +81,7 @@ class HumanitarianId extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return 'https://auth.humanitarian.id/oauth/access_token';
+        return $this->domain . '/oauth/access_token';
     }
 
     /**
@@ -88,7 +94,7 @@ class HumanitarianId extends AbstractProvider
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
 
-        return 'https://auth.humanitarian.id/account.json';
+        return $this->domain . '/account.json';
     }
 
     /**
