@@ -133,7 +133,7 @@ class HumanitarianIdTest extends \PHPUnit_Framework_TestCase
         $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
 
         $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $userResponse->shouldReceive('getBody')->andReturn('{"id": '.$userId.', "firstName": "'.$firstName.'", "lastName": "'.$lastName.'", "emailAddress": "'.$email.'", "location": { "name": "'.$location.'" }, "headline": "'.$description.'", "summary": "'.$summary.'", "pictureUrl": "'.$picture.'", "publicProfileUrl": "'.$url.'", "somethingExtra": '.json_encode($somethingExtra).'}');
+        $userResponse->shouldReceive('getBody')->andReturn('{"sub": '.$userId.', "given_name": "'.$firstName.'", "family_name": "'.$lastName.'", "email": "'.$email.'", "location": { "name": "'.$location.'" }, "headline": "'.$description.'", "summary": "'.$summary.'", "picture": "'.$picture.'", "publicProfileUrl": "'.$url.'", "somethingExtra": '.json_encode($somethingExtra).'}');
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
 
         $client = m::mock('GuzzleHttp\ClientInterface');
@@ -146,23 +146,15 @@ class HumanitarianIdTest extends \PHPUnit_Framework_TestCase
         $user = $this->provider->getResourceOwner($token);
 
         $this->assertEquals($email, $user->getEmail());
-        $this->assertEquals($email, $user->toArray()['emailAddress']);
+        $this->assertEquals($email, $user->toArray()['email']);
         $this->assertEquals($userId, $user->getId());
-        $this->assertEquals($userId, $user->toArray()['id']);
+        $this->assertEquals($userId, $user->toArray()['sub']);
         $this->assertEquals($firstName, $user->getFirstName());
-        $this->assertEquals($firstName, $user->toArray()['firstName']);
+        $this->assertEquals($firstName, $user->toArray()['given_name']);
         $this->assertEquals($lastName, $user->GeTlAsTnAmE()); // https://github.com/thephpleague/oauth2-linkedin/issues/4
-        $this->assertEquals($lastName, $user->toArray()['lastName']);
-        $this->assertEquals($picture, $user->getImageurl());
-        $this->assertEquals($picture, $user->toArray()['pictureUrl']);
-        $this->assertEquals($location, $user->getLocation());
-        $this->assertEquals($location, $user->toArray()['location']['name']);
-        $this->assertEquals($url, $user->getUrl());
-        $this->assertEquals($url, $user->toArray()['publicProfileUrl']);
-        $this->assertEquals($description, $user->getDescription());
-        $this->assertEquals($description, $user->toArray()['headline']);
-        $this->assertEquals($summary, $user->getSummary());
-        $this->assertEquals($summary, $user->toArray()['summary']);
+        $this->assertEquals($lastName, $user->toArray()['family_name']);
+        $this->assertEquals($picture, $user->getAvatar());
+        $this->assertEquals($picture, $user->toArray()['picture']);
         $this->assertEquals($somethingExtra, $user->getAttribute('somethingExtra'));
         $this->assertEquals($somethingExtra, $user->toArray()['somethingExtra']);
         $this->assertEquals($somethingExtra['more'], $user->getAttribute('somethingExtra.more'));
@@ -184,7 +176,7 @@ class HumanitarianIdTest extends \PHPUnit_Framework_TestCase
         $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
 
         $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $userResponse->shouldReceive('getBody')->andReturn('{"id": '.$userId.', "firstName": "'.$firstName.'", "lastName": "'.$lastName.'", "emailAddress": "'.$email.'", "location": { "name": "'.$location.'" }, "headline": "'.$description.'", "summary": "'.$summary.'", "publicProfileUrl": "'.$url.'"}');
+        $userResponse->shouldReceive('getBody')->andReturn('{"sub": '.$userId.', "given_name": "'.$firstName.'", "family_name": "'.$lastName.'", "email": "'.$email.'", "location": { "name": "'.$location.'" }, "headline": "'.$description.'", "summary": "'.$summary.'", "publicProfileUrl": "'.$url.'"}');
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
 
         $client = m::mock('GuzzleHttp\ClientInterface');
@@ -197,22 +189,13 @@ class HumanitarianIdTest extends \PHPUnit_Framework_TestCase
         $user = $this->provider->getResourceOwner($token);
 
         $this->assertEquals($email, $user->getEmail());
-        $this->assertEquals($email, $user->toArray()['emailAddress']);
+        $this->assertEquals($email, $user->toArray()['email']);
         $this->assertEquals($userId, $user->getId());
-        $this->assertEquals($userId, $user->toArray()['id']);
+        $this->assertEquals($userId, $user->toArray()['sub']);
         $this->assertEquals($firstName, $user->getFirstName());
-        $this->assertEquals($firstName, $user->toArray()['firstName']);
+        $this->assertEquals($firstName, $user->toArray()['given_name']);
         $this->assertEquals($lastName, $user->GeTlAsTnAmE()); // https://github.com/thephpleague/oauth2-linkedin/issues/4
-        $this->assertEquals($lastName, $user->toArray()['lastName']);
-        $this->assertEquals(null, $user->getImageurl());
-        $this->assertEquals($location, $user->getLocation());
-        $this->assertEquals($location, $user->toArray()['location']['name']);
-        $this->assertEquals($url, $user->getUrl());
-        $this->assertEquals($url, $user->toArray()['publicProfileUrl']);
-        $this->assertEquals($description, $user->getDescription());
-        $this->assertEquals($description, $user->toArray()['headline']);
-        $this->assertEquals($summary, $user->getSummary());
-        $this->assertEquals($summary, $user->toArray()['summary']);
+        $this->assertEquals($lastName, $user->toArray()['family_name']);
     }
 
     /**
